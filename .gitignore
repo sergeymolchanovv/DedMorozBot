@@ -1,6 +1,6 @@
-# created by virtualenv automatically
 snowman_database.db
 config.py
 .idea
 venv
 __pycache__
+
