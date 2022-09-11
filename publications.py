@@ -1,17 +1,16 @@
-import time
-
+# import time
 # import pygsheets
 # import datetime
 
 
 # global value_adult1
-# value_adult1 = '0'
+# value_adult1 = 'ы пидор'
 # global value_adult2
-# value_adult2 = '0'
+# value_adult2 = 'ы пидор'
 # global value_children1
-# value_children1 = '0'
+# value_children1 = 'ы пидор'
 # global value_children2
-# value_children2 = '0'
+# value_children2 = 'ы пидор'
 
 
 # def is_it_now():
@@ -23,12 +22,12 @@ import time
 #         print("True")
 #     else:
 #         print("False")
-
-
+#
+#
 # while True:
 #     is_it_now()
 #     time.sleep(10800)
-
+#
 # def get_values_from_google_sheets():
 #     gc = pygsheets.authorize(service_file='./client_secret.json')
 #     sh = gc.open('Сергей Молчанов')
@@ -57,7 +56,7 @@ caption_adult = 'На корпоратив' + '\n'\
  + '\n' + '- Красивые костюмы героев, как на фото!' \
  + '\n' + '- Стихи от взрослых ребят' \
  + '\n' + '- Вручение ваших подарков' + '\n' \
- + '\n' + f'До завтра стоимость от <b><u>{value_adult1}</u></b> <s>{value_adult2}</s> руб.'
+ + '\n' + f'До завтра стоимость от <b><u> 0 </u></b> <s> 0 </s> руб.'
 
 caption_child1 = 'Экспресс-поздравление.' + '\n'\
  + '\n' + \
@@ -70,7 +69,7 @@ caption_child1 = 'Экспресс-поздравление.' + '\n'\
  + '\n' + '- Вручение вашего подарка'\
  + '\n' + '- Общее фото на память' + '\n' \
  + '\n' + '(подходит для 1-2 детей, а также детям до 2 лет) ' + '\n' \
- + '\n' + f'До завтра стоимость от <b><u>{value_children1}</u></b> <s>{value_children2}</s> руб.' + '\n'\
+ + '\n' + f'До завтра стоимость от <b><u> 0 </u></b> <s> 0 </s> руб.' + '\n'\
  + '\n' + '*В поездках за город дополнительно рассчитывается дорога' + '\n'
 
 caption_child2 = """Описание 2"""
