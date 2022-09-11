@@ -1,49 +1,49 @@
 import time
 
-import pygsheets
-import datetime
+# import pygsheets
+# import datetime
 
 
-global value_adult1
-value_adult1 = '0'
-global value_adult2
-value_adult2 = '0'
-global value_children1
-value_children1 = '0'
-global value_children2
-value_children2 = '0'
+# global value_adult1
+# value_adult1 = '0'
+# global value_adult2
+# value_adult2 = '0'
+# global value_children1
+# value_children1 = '0'
+# global value_children2
+# value_children2 = '0'
 
 
-def is_it_now():
-    now  = datetime.datetime.now().strftime("%Y-%m-%d")
-    needed_date = "2022-07-28"
-    pydate = datetime.datetime.strptime(needed_date, '%Y-%m-%d')
-    print(pydate)
-    if now == needed_date:
-        print("True")
-    else:
-        print("False")
+# def is_it_now():
+#     now  = datetime.datetime.now().strftime("%Y-%m-%d")
+#     needed_date = "2022-07-28"
+#     pydate = datetime.datetime.strptime(needed_date, '%Y-%m-%d')
+#     print(pydate)
+#     if now == needed_date:
+#         print("True")
+#     else:
+#         print("False")
 
 
 # while True:
 #     is_it_now()
 #     time.sleep(10800)
 
-def get_values_from_google_sheets():
-    gc = pygsheets.authorize(service_file='./client_secret.json')
-    sh = gc.open('Сергей Молчанов')
-    wks = sh.worksheet('index', 4)
-    global value_adult1
-    value_adult1 = wks.get_value('A1')
-    global value_adult2
-    value_adult2 = wks.get_value('B1')
-    global value_children1
-    value_children1 = wks.get_value('A2')
-    global value_children2
-    value_children2 = wks.get_value('B2')
-
-
-get_values_from_google_sheets()
+# def get_values_from_google_sheets():
+#     gc = pygsheets.authorize(service_file='./client_secret.json')
+#     sh = gc.open('Сергей Молчанов')
+#     wks = sh.worksheet('index', 4)
+#     global value_adult1
+#     value_adult1 = wks.get_value('A1')
+#     global value_adult2
+#     value_adult2 = wks.get_value('B1')
+#     global value_children1
+#     value_children1 = wks.get_value('A2')
+#     global value_children2
+#     value_children2 = wks.get_value('B2')
+#
+#
+# get_values_from_google_sheets()
 
 caption_adult = 'На корпоратив' + '\n'\
  + '\n' + '(в ресторан, кафе, в офис, в любое место, где проходит ваш праздник)' + '\n' \
