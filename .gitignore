@@ -1,5 +1,5 @@
-snowman_database.db
-config.py
+data/snowman_database.db
+data/config_dm.py
 .idea
 venv
 __pycache__

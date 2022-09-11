@@ -4,7 +4,7 @@ import sqlite3
 
 
 def push_data(telegram_id, phone=None, username=None):
-    conn = sqlite3.connect('snowman_database.db')
+    conn = sqlite3.connect('data/snowman_database.db')
     cursor = conn.cursor()
     print('попали в пуш дата')
     cursor.execute('INSERT INTO MainDB (TelegramID, Phone, Username) VALUES (?, ?, ?)', (telegram_id, phone, username))
@@ -13,7 +13,7 @@ def push_data(telegram_id, phone=None, username=None):
 
 
 def get_all_tg_ids_from_db():
-    conn = sqlite3.connect('snowman_database.db')
+    conn = sqlite3.connect('data/snowman_database.db')
     cursor = conn.cursor()
     cursor.execute('select distinct TelegramID from MainDB')
     records = cursor.fetchall()
