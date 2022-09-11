@@ -1,5 +1,5 @@
 FROM python:3.10.5
-WORKDIR /usr/src/DedMorozBot
-COPY . /usr/src/DedMorozBot
-RUN pip install --user -r /usr/src/DedMorozBot/req.txt
+WORKDIR /usr/src/dedmorozbot
+COPY . /usr/src/dedmorozbot
+RUN pip install --user -r /usr/src/dedmorozbot/req.txt
 CMD ["python", "main.py"]
