@@ -13,22 +13,23 @@ from publications import *
 from database import *
 
 
-
 serg_id = 357864166
-kp_telegram_id = "BQACAgIAAxkBAAIJ42LU7q2vT8dS8bz7GpEDqHCiRd3wAAI4GAACkoeoSpRAnmMb8WO_KQQ"
-photo_telegram_id1 = "AgACAgIAAxkBAAIJ9GLU9oiVfPWq63f3wceDKLOPTToWAAJCuzEbkoeoSkLX5kkpqtobAQADAgADeQADKQQ"
-photo_telegram_id2 = "AgACAgIAAxkBAAIJ9GLU9oiVfPWq63f3wceDKLOPTToWAAJCuzEbkoeoSkLX5kkpqtobAQADAgADeQADKQQ"
-photo_telegram_id3 = "AgACAgIAAxkBAAIJ9GLU9oiVfPWq63f3wceDKLOPTToWAAJCuzEbkoeoSkLX5kkpqtobAQADAgADeQADKQQ"
-photo_telegram_id4 = "AgACAgIAAxkBAAIJ9GLU9oiVfPWq63f3wceDKLOPTToWAAJCuzEbkoeoSkLX5kkpqtobAQADAgADeQADKQQ"
-photo_telegram_id5 = "AgACAgIAAxkBAAIJ9GLU9oiVfPWq63f3wceDKLOPTToWAAJCuzEbkoeoSkLX5kkpqtobAQADAgADeQADKQQ"
+kp_telegram_id = "BQACAgIAAxkBAAMiY1WZ14cYBZ_g17DOLUHh7ZuEdZUAAtUkAALw17FKJw34-lEGYZIqBA"
+photo_telegram_id1 = "AgACAgIAAxkBAAMyY1Wf61ZbQmsCpOXsYbXT9B2cmbEAAtq_MRvw17FKLxGFzroLy6wBAAMCAAN5AAMqBA"
+photo_telegram_id2 = "AgACAgIAAxkBAAM3Y1WgGrQ31yOq-Hsg2KWDM0Xxgv0AAtu_MRvw17FKgAPCZPaLXWcBAAMCAAN5AAMqBA"
+photo_telegram_id3 = "AgACAgIAAxkBAAM4Y1WgLC6LzZe0AAG8CQvvO7kV-svZAALcvzEb8NexSoo-ck9CNj5gAQADAgADeQADKgQ"
+photo_telegram_id4 = "AgACAgIAAxkBAAM5Y1WgV8BHKKlpfBnC6MY6sQ1xzdAAAt2_MRvw17FKgQWq068AAc9DAQADAgADeQADKgQ"
+photo_telegram_id5 = "AgACAgIAAxkBAAM6Y1Wgdvm5toF0C-MhnRTy5VsuBv8AAt6_MRvw17FKw4jZRK8bTOIBAAMCAAN5AAMqBA"
 photo_telegram_id6 = "AgACAgIAAxkBAAIJ9GLU9oiVfPWq63f3wceDKLOPTToWAAJCuzEbkoeoSkLX5kkpqtobAQADAgADeQADKQQ"
+photo_telegram_corporate = "AgACAgIAAxkBAANRY1WhtIwxlDcV4VlQFDeGMvNZ5YcAAuW_MRvw17FK76YIdocWvREBAAMCAAN5AAMqBA"
+photo_telegram_adult = "AgACAgIAAxkBAANSY1WhzXmsLnVUUfghNqKskni5kL8AAua_MRvw17FKimbZtQIeWJMBAAMCAAN5AAMqBA"
 
 publications_index_dict = {0: (caption_child1, kb_child_caption1_menu, photo_telegram_id1),
                            1: (caption_child2, kb_child_caption2_menu, photo_telegram_id2),
                            2: (caption_child3, kb_child_caption3_menu, photo_telegram_id3),
                            3: (caption_child4, kb_child_caption4_menu, photo_telegram_id4),
                            4: (caption_child5, kb_child_caption5_menu, photo_telegram_id5),
-                           5: (caption_child6, kb_child_caption6_menu, photo_telegram_id6)}
+                           5: (caption_child6, kb_child_caption6_menu, photo_telegram_id1)}
 index = 0
 
 contact = Contact(False)
@@ -36,9 +37,19 @@ contact = Contact(False)
 
 # Блок общих хэндлеров
 async def command_start(message: types.Message):
-    await message.answer('Добро пожаловать к одному из помощников деда мороза, к боту морозу :)' + '\n' + '\n' +
-                         'Вам подарочек: снежинка, слепленная цифровыми эльфами: ❄' + '\n' +
-                         'У нас есть для вас подарок! Оставьте заявку, чтобы его получить 😉')
+    await message.answer('''Добро пожаловать к главному волшебнику Нового года - Дедушке Морозу 😊
+
+Я знаю, как сложно бывает выбрать нужное поздравление для ребенка, компании друзей или на работу, поэтому вместе со своими эльфами создали этот бот-помощник!✨
+
+Уверен, что вы найдете то, что подходит именно вам!
+
+А моя внучка Снегурочка будет рада забронировать удобное для вас время🎉
+
+А чтобы добавить вам праздничного настроения, я подготовил для вас подарок! Жми на Снежинку❄️
+
+Кстати, это не единственный подарок. Оставьте заявку на праздник, чтобы получить второй 🎁
+
+С наступающим Новым годом!🎄''')
 
     menu = await get_keyboard_menu()
     await message.answer('Выберите в меню, кого требуется поздравить', reply_markup=menu)
@@ -130,7 +141,7 @@ async def data_collection_and_final_sending(msg):
 async def return_to_menu(msg):
     await bot.send_message(msg.chat.id,
                            'Снегурочка свяжется с вами в ближайшее время и расскажет все подробности 😉' + '\n' + '\n' +
-                           'Если хотите связаться самостоятельно, контакты снегурочки:'+ '\n' +
+                           'Если хотите связаться самостоятельно, контакты снегурочки:' + '\n' +
                            '+79999999999', reply_markup=social_networks_kb)
     await msg.forward(serg_id)
     await msg.answer('Также обещанный подарок для вас. Сказка на ночь!', reply_markup=kb_main_menu)
@@ -144,7 +155,7 @@ async def approved_name(callback: types.CallbackQuery):
     global contact
     contact.name = callback.from_user.full_name
     contact.username = callback.from_user.username
-    await callback.message.answer('Поделитесь контактом плез', reply_markup=contact_kb)
+    await callback.message.answer('Нажмите кнопку "Поделиться контактом"', reply_markup=contact_kb)
     await callback.message.answer('Либо нажмите "не хочу делиться"', reply_markup=no_contact_kb)
 
 
@@ -166,7 +177,7 @@ async def load_name(message: types.Message, state: FSMContext):
     global contact
     contact.name = message.text
     await state.finish()
-    await message.answer('Поделитесь контактом плез', reply_markup=contact_kb)
+    await message.answer('Нажмите кнопку "Поделиться контактом"', reply_markup=contact_kb)
     await message.answer('Либо нажмите "не хочу делиться"', reply_markup=no_contact_kb)
 
 
@@ -198,9 +209,11 @@ async def send_message_to_all_users_in_db(message: types.Message, state: FSMCont
 # Блок корпоративных хэндлеров
 async def company_order(callback: types.CallbackQuery):
     await assign_contact_class_obj(contact, "CommercialContact")
-
-    await callback.message.edit_text('Сообщение с подробностями. У нас круто и ваще кайф у нас заказывать! '
-                                     'Ниже в коммерческом предложении можете ознакомиться подробнее')
+    await callback.message.delete_reply_markup()
+    await callback.message.delete()
+    await bot.send_photo(callback.message.chat.id, photo=photo_telegram_corporate,
+                         caption=caption_corporate, parse_mode=types.ParseMode.HTML)
+    # await callback.message.edit_text()
     await bot.send_document(callback.message.chat.id, document=kp_telegram_id)
     await callback.message.answer('Если вам всё понравилось, оставьте ваши контакты, чтобы снегурочка ' +
                                   'могла с вами связаться', reply_markup=contact_kb)
@@ -213,7 +226,7 @@ async def adult_order(callback: types.CallbackQuery):
     await callback.message.delete()
     await assign_contact_class_obj(contact, "AdultContact")
 
-    await bot.send_photo(callback.message.chat.id, photo=photo_telegram_id1,
+    await bot.send_photo(callback.message.chat.id, photo=photo_telegram_adult,
                          caption=caption_adult, parse_mode=types.ParseMode.HTML,
                          reply_markup=adult_chose_kb)
 
@@ -221,7 +234,8 @@ async def adult_order(callback: types.CallbackQuery):
 async def adult_order_take_contacts(callback: types.CallbackQuery):
     await callback.message.delete_reply_markup()
     await callback.message.delete()
-    await callback.message.answer('Нам потребуется ваше имя и телефон' + '\n' +
+    await callback.message.answer('Если вы хотите, чтобы Снегурочка с вами связалась, оставьте, пожалуйста, '
+                                  'свои контактные данные и мы вам перезвоним!' + '\n' +
                                   f'Ваше настоящее имя: {callback.from_user.full_name}?', reply_markup=yes_no_kb)
 
 
@@ -230,22 +244,72 @@ async def children_order(callback: types.CallbackQuery):
     await callback.message.delete_reply_markup()
     await callback.message.delete()
     await assign_contact_class_obj(contact, "ChildrenContact")
+    await callback.message.answer('Нажмите на поздравление, чтобы узнать подробнее', reply_markup=children_product_kb)
 
-    await bot.send_photo(callback.message.chat.id, photo=publications_index_dict[index][2],
-                         caption=publications_index_dict[index][0],
-                         reply_markup=publications_index_dict[index][1])
+    # await bot.send_photo(callback.message.chat.id, photo=publications_index_dict[index][2],
+    #                      caption=publications_index_dict[index][0],
+    #                      reply_markup=publications_index_dict[index][1])
+# async def children_order_print_menu_element(callback: types.CallbackQuery):
+#     await callback.answer('')
+#     global index
+#     if callback.data == 'menu_back':
+#         index -= 1
+#     elif callback.data == 'menu_next':
+#         index += 1
+#
+#     file = InputMedia(media=publications_index_dict[index][2], caption=publications_index_dict[index][0])
+#     await callback.message.edit_media(file, reply_markup=publications_index_dict[index][1])
 
 
-async def children_order_print_menu_element(callback: types.CallbackQuery):
+async def children_order_print_menu(callback: types.CallbackQuery):
+    # await callback.message.edit_text()
     await callback.answer('')
-    global index
-    if callback.data == 'menu_back':
-        index -= 1
-    elif callback.data == 'menu_next':
-        index += 1
+    if callback.data == 'product1':
+        await callback.message.delete()
+        await bot.send_photo(callback.message.chat.id, photo=publications_index_dict[0][2],
+                             caption=publications_index_dict[0][0],
+                             reply_markup=publications_index_dict[0][1])
+    elif callback.data == 'product2':
+        await callback.message.delete()
+        await bot.send_photo(callback.message.chat.id, photo=publications_index_dict[1][2],
+                             caption=publications_index_dict[1][0],
+                             reply_markup=publications_index_dict[1][1])
+    elif callback.data == 'product3':
+        await callback.message.delete()
+        await bot.send_photo(callback.message.chat.id, photo=publications_index_dict[2][2],
+                             caption=publications_index_dict[2][0],
+                             reply_markup=publications_index_dict[2][1])
+    elif callback.data == 'product4':
+        await callback.message.delete()
+        await bot.send_photo(callback.message.chat.id, photo=publications_index_dict[3][2],
+                             caption=publications_index_dict[3][0],
+                             reply_markup=publications_index_dict[3][1])
+    elif callback.data == 'product5':
+        await callback.message.delete()
+        await bot.send_photo(callback.message.chat.id, photo=publications_index_dict[4][2],
+                             caption=publications_index_dict[4][0],
+                             reply_markup=publications_index_dict[4][1])
+    elif callback.data == 'product6':
+        await callback.message.delete()
+        await bot.send_photo(callback.message.chat.id, photo=publications_index_dict[5][2],
+                             caption=publications_index_dict[5][0],
+                             reply_markup=publications_index_dict[5][1])
 
-    file = InputMedia(media=publications_index_dict[index][2], caption=publications_index_dict[index][0])
-    await callback.message.edit_media(file, reply_markup=publications_index_dict[index][1])
+
+async def children_order_menu(callback: types.CallbackQuery):
+    await callback.answer('')
+    await callback.message.delete()
+    await callback.message.answer('Выберите поздравление', reply_markup=children_product_kb)
+# async def children_order_print_menu_element(callback: types.CallbackQuery):
+#     await callback.answer('')
+#     global index
+#     if callback.data == 'menu_back':
+#         index -= 1
+#     elif callback.data == 'menu_next':
+#         index += 1
+#
+#     file = InputMedia(media=publications_index_dict[index][2], caption=publications_index_dict[index][0])
+#     await callback.message.edit_media(file, reply_markup=publications_index_dict[index][1])
 
 
 async def children_order_choise(callback: types.CallbackQuery):
@@ -269,18 +333,19 @@ async def children_count(callback: types.CallbackQuery):
     await interpretate_children_count(callback)
     print(callback.data)
     if (callback.data == '4_7childcount') and (contact.order == '1caption'):
-        await callback.message.edit_text('Боюсь, Дедушке не хватит времени на всех детей '
+        await callback.message.edit_text('Боюсь, Дедушке не хватит времени на всех ребят '
                                       'при экспресс-поздравлении (15 мин.)'
                                       + '\n' + '\n' +
                                       'Не хотите выбрать 30 минут?', reply_markup=children_30min_kb)
     elif (callback.data == '8morechildcount') and (contact.order == '1caption'):
-        await callback.message.edit_text('Боюсь, Дедушке не хватит времени на всех детей '
-                                      'при экспресс-поздравлении (15 мин.)'
-                                      + '\n' + '8й и каждый последующий ребёнок оплачивается дополнительно '
-                                      '300 рублей за ребёнка' + '\n'
-                                      + 'Если у вас больше 10 детей, предлагаем взять утренник'
-                                      + '\n' +
-                                      'Не хотите изменить тип поздравления?', reply_markup=children_30min_kb_with_morning)
+        await callback.message.edit_text('Боюсь, Дедушке не хватит времени на всех ребят '
+                                         'при экспресс-поздравлении (15 мин.)' + '\n' +
+                                         'Оповещаем вас, что 8 и каждый последующий ребёнок оплачивается дополнительно!'
+                                         'Стоимость доплаты составит 300 рублей за каждого ребёнка 😊' + '\n'
+                                          + '❗️Если в поздравлении участвует больше 10 детей, '
+                                            'предлагаем вам рассмотреть формат утренника (от 10-20 детей)'
+                                          + '\n' +
+                                         'Изменим тип поздравления?', reply_markup=children_30min_kb_with_morning)
     elif (callback.data == '8morechildcount') and (contact.order == '2caption'):
         await callback.message.edit_text('8й и каждый последующий ребёнок оплачивается дополнительно '
                                       '300 рублей за ребёнка' + '\n'
@@ -315,7 +380,8 @@ async def children_age(msg: types.Message,  state: FSMContext):
     async with state.proxy() as data:
         contact.age = data['age']
     await state.finish()
-    await msg.answer('Нам потребуется ваше имя и телефон' + '\n' +
+    await msg.answer('Если вы хотите, чтобы Снегурочка с вами связалась, оставьте, пожалуйста, '
+                     'свои контактные данные и мы вам перезвоним!' + '\n' +
                      f'Ваше настоящее имя: {msg.from_user.full_name}?', reply_markup=yes_no_kb)
 
 

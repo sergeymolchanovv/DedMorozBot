@@ -33,8 +33,10 @@ def register_handlers(dp: Dispatcher):
 
    # Блок регистрации детских хэндлеров
     dp.register_callback_query_handler(children_order, text='/Детей')
-    dp.register_callback_query_handler(children_order_print_menu_element, text=['menu_back', 'menu_next'])
-
+    # dp.register_callback_query_handler(children_order_print_menu_element, text=['menu_back', 'menu_next'])
+    dp.register_callback_query_handler(children_order_print_menu, text=['product1', 'product2', 'product3',
+                                                                    'product4', 'product5', 'product6'])
+    dp.register_callback_query_handler(children_order_menu, text=['menu_back'])
     dp.register_callback_query_handler(children_order_choise, text=['1caption', '2caption', '3caption',
                                                                     '4caption', '5caption'])
     dp.register_callback_query_handler(children_count, text=['1_3childcount', '4_7childcount', '35childcount',
