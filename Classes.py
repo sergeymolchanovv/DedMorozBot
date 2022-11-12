@@ -8,7 +8,8 @@ class Contact(StatesGroup):
     name = State()
     phone = State()
     username = State()
-    gifted = False
+    gifted = int()
+    id = str()
 
     def __init__(self, gifted):
         self.gifted = gifted

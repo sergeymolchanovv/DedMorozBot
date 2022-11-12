@@ -1,9 +1,5 @@
-import asyncio
-import json
-
 from aiogram import types, Dispatcher
 from Classes import CommercialContact, ChildrenContact, AdultContact, Contact, Mailing
-# from aiogram.dispatcher.filters import Text
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ChatActions, ReplyKeyboardRemove, InputMedia, InputFile
 from client_kb import *
@@ -14,29 +10,44 @@ from database import *
 
 
 serg_id = 357864166
-kp_telegram_id = "BQACAgIAAxkBAAMiY1WZ14cYBZ_g17DOLUHh7ZuEdZUAAtUkAALw17FKJw34-lEGYZIqBA"
-photo_telegram_id1 = "AgACAgIAAxkBAAMyY1Wf61ZbQmsCpOXsYbXT9B2cmbEAAtq_MRvw17FKLxGFzroLy6wBAAMCAAN5AAMqBA"
-photo_telegram_id2 = "AgACAgIAAxkBAAM3Y1WgGrQ31yOq-Hsg2KWDM0Xxgv0AAtu_MRvw17FKgAPCZPaLXWcBAAMCAAN5AAMqBA"
-photo_telegram_id3 = "AgACAgIAAxkBAAM4Y1WgLC6LzZe0AAG8CQvvO7kV-svZAALcvzEb8NexSoo-ck9CNj5gAQADAgADeQADKgQ"
-photo_telegram_id4 = "AgACAgIAAxkBAAM5Y1WgV8BHKKlpfBnC6MY6sQ1xzdAAAt2_MRvw17FKgQWq068AAc9DAQADAgADeQADKgQ"
-photo_telegram_id5 = "AgACAgIAAxkBAAM6Y1Wgdvm5toF0C-MhnRTy5VsuBv8AAt6_MRvw17FKw4jZRK8bTOIBAAMCAAN5AAMqBA"
-photo_telegram_id6 = "AgACAgIAAxkBAAIJ9GLU9oiVfPWq63f3wceDKLOPTToWAAJCuzEbkoeoSkLX5kkpqtobAQADAgADeQADKQQ"
-photo_telegram_corporate = "AgACAgIAAxkBAANRY1WhtIwxlDcV4VlQFDeGMvNZ5YcAAuW_MRvw17FK76YIdocWvREBAAMCAAN5AAMqBA"
-photo_telegram_adult = "AgACAgIAAxkBAANSY1WhzXmsLnVUUfghNqKskni5kL8AAua_MRvw17FKimbZtQIeWJMBAAMCAAN5AAMqBA"
+orders_chat_id = -824293895
+kp_telegram_id = "BQACAgIAAxkBAAMnY24zL__-CE4VZnAffWvJ5Z13o7wAAh0hAALa6XBLLYQkEPDpMZorBA"
+photo_telegram_id1 = "AgACAgIAAxkBAAMmY24zBdqRkgek32bxTsgB_p7p4OcAAmnCMRv38HBL8RNHv94zprABAAMCAAN5AAMrBA"
+photo_telegram_id2 = "AgACAgIAAxkBAAMlY24y-fmiaey5EWtrlG9ZA_VXwmkAAmrCMRv38HBLqkVYgQ1qmxcBAAMCAAN5AAMrBA"
+photo_telegram_id3 = "AgACAgIAAxkBAAMoY24zL4GC4m9MvvaflHOzobqP1kQAAuG_MRva6XBLK1CVJO5X6wUBAAMCAAN5AAMrBA"
+photo_telegram_id4 = "AgACAgIAAxkBAAMpY24zTHUw576yif38VBT-npbtVX4AAuK_MRva6XBLtd9xja6u-oEBAAMCAAN5AAMrBA"
+photo_telegram_id5 = "AgACAgIAAxkBAAMqY24zW_2aXa94PUPGRQ0YxKmZ8KcAAuO_MRva6XBLqX5RVLxniykBAAMCAAN5AAMrBA"
+photo_telegram_id6 = "AgACAgIAAxkBAAMkY24y3n3kglLARNwifUdtcYpWH3YAAmvCMRv38HBLVbZpFtxgM3QBAAMCAAN5AAMrBA"
+photo_telegram_corporate = "AgACAgIAAxkBAAMjY24ywQikaY0iclVW_HqB7XeselgAAt-_MRva6XBLvxdtn-frkocBAAMCAAN5AAMrBA"
+photo_telegram_adult = "AgACAgIAAxkBAAMeY24yl4EpNoe4yIF5SDYNdTjWLhsAAt6_MRva6XBLSRg-hJQXVicBAAMCAAN5AAMrBA"
 
 publications_index_dict = {0: (caption_child1, kb_child_caption1_menu, photo_telegram_id1),
                            1: (caption_child2, kb_child_caption2_menu, photo_telegram_id2),
                            2: (caption_child3, kb_child_caption3_menu, photo_telegram_id3),
                            3: (caption_child4, kb_child_caption4_menu, photo_telegram_id4),
                            4: (caption_child5, kb_child_caption5_menu, photo_telegram_id5),
-                           5: (caption_child6, kb_child_caption6_menu, photo_telegram_id1)}
+                           5: (caption_child6, kb_child_caption6_menu, photo_telegram_id6)}
 index = 0
-
 contact = Contact(False)
 
 
 # Блок общих хэндлеров
 async def command_start(message: types.Message):
+
+    if check_user_in_db(message.chat.id):
+        user_data_list = get_user_data_from_db(message.chat.id)
+        contact.id = user_data_list[0][0]
+        contact.phone = user_data_list[0][1]
+        contact.username = user_data_list[0][2]
+        contact.gifted = user_data_list[0][3]
+        contact.name = user_data_list[0][4]
+    else:
+        contact.username = message.chat.username
+        contact.name = message.chat.full_name
+        contact.phone = None
+        contact.id = message.chat.id
+        push_data(message.chat.id, username=message.chat.username, gifted=0, tg_name=message.chat.full_name)
+
     await message.answer('''Добро пожаловать к главному волшебнику Нового года - Дедушке Морозу 😊
 
 Я знаю, как сложно бывает выбрать нужное поздравление для ребенка, компании друзей или на работу, поэтому вместе со своими эльфами создали этот бот-помощник!✨
@@ -53,24 +64,26 @@ async def command_start(message: types.Message):
 
     menu = await get_keyboard_menu()
     await message.answer('Выберите в меню, кого требуется поздравить', reply_markup=menu)
-    print(message.chat.id)
 
 
 async def main_menu(message: types.Message):
+    contact.id = message.chat.id
     menu = await get_keyboard_menu()
     await message.answer('Выберите в меню, кого требуется поздравить', reply_markup=menu)
-    print(message.chat.id)
-    print(message.from_user.username)
 
 
 async def get_one_time_gift(callback: types.CallbackQuery):
-    contact.gifted = True
-    await callback.message.edit_text('На тебе подарок, епта в лицо прям. Выбирай, кого поздравить')
+    update_gifted_in_db(callback.message.chat.id)
+    await callback.message.edit_text('''Мы так рады видеть тебя здесь, что Дедушка Мороз подготовил для тебя подарок! 🎁
+
+Забирай его себе и пишите вместе с ребенком письмо главному новогоднему волшебнику✨
+
+Также можете посмотреть варианты поздравлений ниже''')
     await callback.message.edit_reply_markup(kb_menu)
 
 
 async def get_keyboard_menu():
-    if contact.gifted is False:
+    if check_gifted(contact.id) == False:
         return kb_menu_with_gift
     else:
         return kb_menu
@@ -88,7 +101,6 @@ async def get_contact(msg: types.Message):
     global contact
     contact.phone = msg.contact.phone_number
     contact.username = msg.from_user.username
-    print(msg.from_user.username)
     await data_collection_and_final_sending(msg)
 
 
@@ -103,33 +115,33 @@ async def get_photo_id(msg: types.Message):
 async def data_collection_and_final_sending(msg):
     if isinstance(contact, CommercialContact):
         if msg.from_user.full_name != contact.name:
-            await bot.send_message(serg_id, 'Корпоративный заказ 👇' + '\n' + f'Имя: {contact.name}' + '\n' +
+            await bot.send_message(orders_chat_id, 'Корпоративный заказ 👇' + '\n' + f'Имя: {contact.name}' + '\n' +
                                             f'Username: @{contact.username}')
         else:
-            await bot.send_message(serg_id, 'Корпоративный заказ 👇' + '\n' +
+            await bot.send_message(orders_chat_id, 'Корпоративный заказ 👇' + '\n' +
                                             f'Username: @{contact.username}')
         await return_to_menu(msg)
 
     elif isinstance(contact, AdultContact):
         if msg.from_user.full_name != contact.name:
-            await bot.send_message(serg_id, 'Заказ на корпоратив 👇' + '\n' +
+            await bot.send_message(orders_chat_id, 'Заказ на корпоратив 👇' + '\n' +
                                             f'Имя: {contact.name}' + '\n' +
                                             f'Username: @{contact.username}')
         else:
-            await bot.send_message(serg_id, 'Заказ на корпоратив 👇' + '\n' +
+            await bot.send_message(orders_chat_id, 'Заказ на корпоратив 👇' + '\n' +
                                             f'Username: @{contact.username}')
         await return_to_menu(msg)
 
     elif isinstance(contact, ChildrenContact):
         if msg.from_user.full_name != contact.name:
-            await bot.send_message(serg_id,
+            await bot.send_message(orders_chat_id,
                                    'Заказ для ребёнка 👇' + '\n' + f'Имя заказчика: {contact.name}' + '\n' +
                                    f'Username: @{contact.username}' + '\n' +
                                    f'Тип заказа: {contact.order}' + '\n' +
                                    f'Количество детей: {contact.children_count}' + '\n' +
                                    f'Возраст детей: {contact.age}')
         else:
-            await bot.send_message(serg_id,
+            await bot.send_message(orders_chat_id,
                                    'Заказ для ребёнка 👇' + '\n' +
                                    f'Username: @{contact.username}' + '\n' +
                                    f'Тип заказа: {contact.order}' + '\n' +
@@ -143,10 +155,10 @@ async def return_to_menu(msg):
                            'Снегурочка свяжется с вами в ближайшее время и расскажет все подробности 😉' + '\n' + '\n' +
                            'Если хотите связаться самостоятельно, контакты снегурочки:' + '\n' +
                            '+79999999999', reply_markup=social_networks_kb)
-    await msg.forward(serg_id)
+    await msg.forward(orders_chat_id)
     await msg.answer('Также обещанный подарок для вас. Сказка на ночь!', reply_markup=kb_main_menu)
     await bot.send_document(msg.chat.id, document=kp_telegram_id)
-    push_data(msg.chat.id, msg.contact.phone_number, msg.from_user.username)
+    update_phone_in_db(msg.chat.id, msg.contact.phone_number)
 
 
 async def approved_name(callback: types.CallbackQuery):
@@ -165,7 +177,7 @@ async def no_contact(callback: types.CallbackQuery):
                            'Если хотите связаться самостоятельно, контакты снегурочки:' + '\n' +
                            '+79999999999', reply_markup=social_networks_kb)
     await callback.message.answer('Чтобы вернуться в меню, нажмите на кнопку /Menu', reply_markup=kb_main_menu)
-    push_data(callback.from_user.id, username=callback.from_user.username)
+    update_phone_in_db(callback.message.chat.id, callback.message.contact.phone_number)
 
 
 async def disapproved_name(callback: types.CallbackQuery):
@@ -246,23 +258,8 @@ async def children_order(callback: types.CallbackQuery):
     await assign_contact_class_obj(contact, "ChildrenContact")
     await callback.message.answer('Нажмите на поздравление, чтобы узнать подробнее', reply_markup=children_product_kb)
 
-    # await bot.send_photo(callback.message.chat.id, photo=publications_index_dict[index][2],
-    #                      caption=publications_index_dict[index][0],
-    #                      reply_markup=publications_index_dict[index][1])
-# async def children_order_print_menu_element(callback: types.CallbackQuery):
-#     await callback.answer('')
-#     global index
-#     if callback.data == 'menu_back':
-#         index -= 1
-#     elif callback.data == 'menu_next':
-#         index += 1
-#
-#     file = InputMedia(media=publications_index_dict[index][2], caption=publications_index_dict[index][0])
-#     await callback.message.edit_media(file, reply_markup=publications_index_dict[index][1])
-
 
 async def children_order_print_menu(callback: types.CallbackQuery):
-    # await callback.message.edit_text()
     await callback.answer('')
     if callback.data == 'product1':
         await callback.message.delete()
@@ -299,45 +296,36 @@ async def children_order_print_menu(callback: types.CallbackQuery):
 async def children_order_menu(callback: types.CallbackQuery):
     await callback.answer('')
     await callback.message.delete()
-    await callback.message.answer('Выберите поздравление', reply_markup=children_product_kb)
-# async def children_order_print_menu_element(callback: types.CallbackQuery):
-#     await callback.answer('')
-#     global index
-#     if callback.data == 'menu_back':
-#         index -= 1
-#     elif callback.data == 'menu_next':
-#         index += 1
-#
-#     file = InputMedia(media=publications_index_dict[index][2], caption=publications_index_dict[index][0])
-#     await callback.message.edit_media(file, reply_markup=publications_index_dict[index][1])
+    await callback.message.answer('Нажмите на поздравление, чтобы узнать подробнее', reply_markup=children_product_kb)
 
 
 async def children_order_choise(callback: types.CallbackQuery):
     await callback.answer('')
     await callback.message.delete()
-    if callback.data == "1caption":
-        contact.order = '1caption'
-    elif callback.data == "2caption":
-        contact.order = '2caption'
-    elif callback.data == "3caption":
-        contact.order = '3caption'
-    elif callback.data == "4caption":
-        contact.order = '4caption'
-    elif callback.data == "5caption":
-        contact.order = '5caption'
+    if callback.data == "children_15_mins":
+        contact.order = 'children_15_mins'
+    elif callback.data == "children_30_mins":
+        contact.order = 'children_30_mins'
+    elif callback.data == "ded_moroz_mail":
+        contact.order = 'ded_moroz_mail'
+    elif callback.data == "forest_meeting":
+        contact.order = 'forest_meeting'
+    elif callback.data == "online_gift":
+        contact.order = 'online_gift'
+    elif callback.data == "utrennik":
+        contact.order = 'utrennik'
     await callback.message.answer('Выберите количество детей', reply_markup=children_count_kb)
 
 
 async def children_count(callback: types.CallbackQuery):
     await callback.answer('')
     await interpretate_children_count(callback)
-    print(callback.data)
-    if (callback.data == '4_7childcount') and (contact.order == '1caption'):
+    if (callback.data == '4_7childcount') and (contact.order == 'children_15_mins'):
         await callback.message.edit_text('Боюсь, Дедушке не хватит времени на всех ребят '
                                       'при экспресс-поздравлении (15 мин.)'
                                       + '\n' + '\n' +
                                       'Не хотите выбрать 30 минут?', reply_markup=children_30min_kb)
-    elif (callback.data == '8morechildcount') and (contact.order == '1caption'):
+    elif (callback.data == '8morechildcount') and (contact.order == 'children_15_mins'):
         await callback.message.edit_text('Боюсь, Дедушке не хватит времени на всех ребят '
                                          'при экспресс-поздравлении (15 мин.)' + '\n' +
                                          'Оповещаем вас, что 8 и каждый последующий ребёнок оплачивается дополнительно!'
@@ -346,7 +334,7 @@ async def children_count(callback: types.CallbackQuery):
                                             'предлагаем вам рассмотреть формат утренника (от 10-20 детей)'
                                           + '\n' +
                                          'Изменим тип поздравления?', reply_markup=children_30min_kb_with_morning)
-    elif (callback.data == '8morechildcount') and (contact.order == '2caption'):
+    elif (callback.data == '8morechildcount') and (contact.order == 'children_30_mins'):
         await callback.message.edit_text('8й и каждый последующий ребёнок оплачивается дополнительно '
                                       '300 рублей за ребёнка' + '\n'
                                       + 'Если у вас больше 10 детей, предлагаем взять утренник'
@@ -361,12 +349,12 @@ async def children_30_minutes(callback: types.CallbackQuery):
     await callback.answer('')
     if callback.data == '30minsyes':
         await callback.message.edit_text('Хорошо, поменял ваш заказ на 30-минутное поздравление')
-        contact.order = '2caption, но сначала хотел 1caption'
+        contact.order = 'children_30_mins, но сначала хотел children_15_mins'
         await callback.message.answer('Напишите возраст детей')
         await ChildrenContact.age.set()
     elif callback.data == 'morning_celebration':
         await callback.message.edit_text('Хорошо, поменял ваш заказ на утренник')
-        contact.order = '6caption, но хотел 1caption'
+        contact.order = 'utrennik, но хотел children_15_mins'
         await callback.message.answer('Напишите возраст детей')
         await ChildrenContact.age.set()
     else:
@@ -416,20 +404,3 @@ async def assign_contact_class_obj(user_contact: Contact, classname: str):
             contact = CommercialContact(False)
         else:
             contact = CommercialContact(True)
-
-
-# # @dp.message_handler(state=Admin.age)  # ловим четвертый ответ
-# async def load_age(message: types.Message, state: FSMContext):
-#     async with state.proxy() as data:
-#         data['age'] = message.text
-#     print(message.from_user.id)
-#     async with state.proxy() as data:
-#         await bot.send_message(357864166, 'Новый заказ!'
-#                                + '\n' + 'Имя: ' + data['name']
-#                                + '\n' + 'Телефон: ' + data['phone']
-#                                + '\n' + 'Удобная дата: ' + data['date']
-#                                + '\n' + 'Возраст ребёнка: ' + data['age'])
-#
-#     await message.reply('Спасибо за заказ. С вами свяжутся в ближайшее время.')
-#
-#     await state.finish()  # завершаем машину состояний

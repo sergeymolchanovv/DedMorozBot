@@ -1,5 +1,4 @@
 from aiogram import executor
-# from handlers import register_handlers
 from create_bot import dp
 from register_handlers import register_handlers
 
