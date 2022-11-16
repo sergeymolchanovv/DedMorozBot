@@ -5,6 +5,7 @@ from aiogram import types
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(command_start, commands=['start'])
     dp.register_message_handler(main_menu, commands=['menu'])
+    dp.register_callback_query_handler(cb_menu, text='menu')
 
     # Рассылка
     dp.register_message_handler(command_mailing, commands=['mailing'])

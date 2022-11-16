@@ -11,7 +11,7 @@ from database import *
 
 serg_id = 357864166
 orders_chat_id = -824293895
-kp_telegram_id = "BQACAgIAAxkBAAMnY24zL__-CE4VZnAffWvJ5Z13o7wAAh0hAALa6XBLLYQkEPDpMZorBA"
+kp_telegram_id = "BQACAgIAAxkBAAICTmN00NTMa9kFcmPkb5F-OMrHnrNwAAJXHgACZNegS7Szlx5ZytAiKwQ"
 photo_telegram_id1 = "AgACAgIAAxkBAAMmY24zBdqRkgek32bxTsgB_p7p4OcAAmnCMRv38HBL8RNHv94zprABAAMCAAN5AAMrBA"
 photo_telegram_id2 = "AgACAgIAAxkBAAMlY24y-fmiaey5EWtrlG9ZA_VXwmkAAmrCMRv38HBLqkVYgQ1qmxcBAAMCAAN5AAMrBA"
 photo_telegram_id3 = "AgACAgIAAxkBAAMoY24zL4GC4m9MvvaflHOzobqP1kQAAuG_MRva6XBLK1CVJO5X6wUBAAMCAAN5AAMrBA"
@@ -20,6 +20,7 @@ photo_telegram_id5 = "AgACAgIAAxkBAAMqY24zW_2aXa94PUPGRQ0YxKmZ8KcAAuO_MRva6XBLqX
 photo_telegram_id6 = "AgACAgIAAxkBAAMkY24y3n3kglLARNwifUdtcYpWH3YAAmvCMRv38HBLVbZpFtxgM3QBAAMCAAN5AAMrBA"
 photo_telegram_corporate = "AgACAgIAAxkBAAMjY24ywQikaY0iclVW_HqB7XeselgAAt-_MRva6XBLvxdtn-frkocBAAMCAAN5AAMrBA"
 photo_telegram_adult = "AgACAgIAAxkBAAMeY24yl4EpNoe4yIF5SDYNdTjWLhsAAt6_MRva6XBLSRg-hJQXVicBAAMCAAN5AAMrBA"
+ded_moroz_letter = "BQACAgIAAxkBAAICT2N00VzFLZdw-ZYiJExubKWmaESuAAJdHgACZNegS_MMDczLw1MrKwQ"
 
 publications_index_dict = {0: (caption_child1, kb_child_caption1_menu, photo_telegram_id1),
                            1: (caption_child2, kb_child_caption2_menu, photo_telegram_id2),
@@ -50,15 +51,13 @@ async def command_start(message: types.Message):
 
     await message.answer('''Добро пожаловать к главному волшебнику Нового года - Дедушке Морозу 😊
 
-Я знаю, как сложно бывает выбрать нужное поздравление для ребенка, компании друзей или на работу, поэтому вместе со своими эльфами создали этот бот-помощник!✨
+Я знаю, как сложно бывает выбрать нужное поздравление для ребенка, компании друзей или на работу, поэтому вместе со своими эльфами создали этот бот помощник!✨
 
 Уверен, что вы найдете то, что подходит именно вам!
 
 А моя внучка Снегурочка будет рада забронировать удобное для вас время🎉
 
-А чтобы добавить вам праздничного настроения, я подготовил для вас подарок! Жми на Снежинку❄️
-
-Кстати, это не единственный подарок. Оставьте заявку на праздник, чтобы получить второй 🎁
+А чтобы добавить вам праздничного настроения, я подготовил для вас подарок!️
 
 С наступающим Новым годом!🎄''')
 
@@ -72,14 +71,23 @@ async def main_menu(message: types.Message):
     await message.answer('Выберите в меню, кого требуется поздравить', reply_markup=menu)
 
 
+async def cb_menu(callback: types.CallbackQuery):
+    await callback.message.delete()
+    contact.id = callback.message.chat.id
+    menu = await get_keyboard_menu()
+    await callback.message.answer('Выберите в меню, кого требуется поздравить', reply_markup=menu)
+
+
 async def get_one_time_gift(callback: types.CallbackQuery):
     update_gifted_in_db(callback.message.chat.id)
-    await callback.message.edit_text('''Мы так рады видеть тебя здесь, что Дедушка Мороз подготовил для тебя подарок! 🎁
+    await callback.message.edit_text('''Мы так рады видеть вас здесь, что Дедушка Мороз подготовил подарок! 🎁
 
-Забирай его себе и пишите вместе с ребенком письмо главному новогоднему волшебнику✨
+Это письмо от главного новогоднего Волшебника✨
 
-Также можете посмотреть варианты поздравлений ниже''')
-    await callback.message.edit_reply_markup(kb_menu)
+Его осталось лишь распечатать и передать ребенку! Уверены, он будет счастлив🥰''')
+    await bot.send_document(callback.message.chat.id, document=ded_moroz_letter)
+    menu = await get_keyboard_menu()
+    await callback.message.answer('Выберите в меню, кого требуется поздравить', reply_markup=menu)
 
 
 async def get_keyboard_menu():
@@ -153,11 +161,9 @@ async def data_collection_and_final_sending(msg):
 async def return_to_menu(msg):
     await bot.send_message(msg.chat.id,
                            'Снегурочка свяжется с вами в ближайшее время и расскажет все подробности 😉' + '\n' + '\n' +
-                           'Если хотите связаться самостоятельно, контакты снегурочки:' + '\n' +
-                           '+79999999999', reply_markup=social_networks_kb)
+                           'Если хотите связаться самостоятельно, контакты Снегурочки:' +
+                           ' +79618881162', reply_markup=social_networks_kb)
     await msg.forward(orders_chat_id)
-    await msg.answer('Также обещанный подарок для вас. Сказка на ночь!', reply_markup=kb_main_menu)
-    await bot.send_document(msg.chat.id, document=kp_telegram_id)
     update_phone_in_db(msg.chat.id, msg.contact.phone_number)
 
 
@@ -174,10 +180,9 @@ async def approved_name(callback: types.CallbackQuery):
 async def no_contact(callback: types.CallbackQuery):
     await callback.message.delete_reply_markup()
     await bot.send_message(callback.message.chat.id,
-                           'Если хотите связаться самостоятельно, контакты снегурочки:' + '\n' +
-                           '+79999999999', reply_markup=social_networks_kb)
+                           'Если хотите связаться самостоятельно, контакты Снегурочки:' +
+                           ' +79618881162', reply_markup=social_networks_kb)
     await callback.message.answer('Чтобы вернуться в меню, нажмите на кнопку /Menu', reply_markup=kb_main_menu)
-    update_phone_in_db(callback.message.chat.id, callback.message.contact.phone_number)
 
 
 async def disapproved_name(callback: types.CallbackQuery):
@@ -189,8 +194,8 @@ async def load_name(message: types.Message, state: FSMContext):
     global contact
     contact.name = message.text
     await state.finish()
-    await message.answer('Нажмите кнопку "Поделиться контактом"', reply_markup=contact_kb)
-    await message.answer('Либо нажмите "не хочу делиться"', reply_markup=no_contact_kb)
+    await message.answer('Нажмите кнопку "Поделиться контактом" в клавиатуре', reply_markup=contact_kb)
+    await message.answer('Либо нажмите "не хочу делиться", но тогда мы не сможем с вами связаться', reply_markup=no_contact_kb)
 
 
 async def command_mailing(message: types.Message):
@@ -227,8 +232,8 @@ async def company_order(callback: types.CallbackQuery):
                          caption=caption_corporate, parse_mode=types.ParseMode.HTML)
     # await callback.message.edit_text()
     await bot.send_document(callback.message.chat.id, document=kp_telegram_id)
-    await callback.message.answer('Если вам всё понравилось, оставьте ваши контакты, чтобы снегурочка ' +
-                                  'могла с вами связаться', reply_markup=contact_kb)
+    await callback.message.answer('Если вас заинтересовало какое-то поздравление и вы хотите узнать о нем подробнее'
+                                  ', оставьте, пожалуйста, ваши контакты и мы с вами обязательно свяжемся! ', reply_markup=contact_kb)
     await callback.message.answer(f'Ваше настоящее имя: {callback.from_user.full_name}?', reply_markup=yes_no_kb)
 
 
@@ -328,20 +333,17 @@ async def children_count(callback: types.CallbackQuery):
     elif (callback.data == '8morechildcount') and (contact.order == 'children_15_mins'):
         await callback.message.edit_text('Боюсь, Дедушке не хватит времени на всех ребят '
                                          'при экспресс-поздравлении (15 мин.)' + '\n' +
-                                         'Оповещаем вас, что 8 и каждый последующий ребёнок оплачивается дополнительно!'
-                                         'Стоимость доплаты составит 300 рублей за каждого ребёнка 😊' + '\n'
-                                          + '❗️Если в поздравлении участвует больше 10 детей, '
-                                            'предлагаем вам рассмотреть формат утренника (от 10-20 детей)'
-                                          + '\n' +
-                                         'Изменим тип поздравления?', reply_markup=children_30min_kb_with_morning)
+                                         'Оповещаем вас, что 8-й и каждый последующий ребёнок '
+                                         'оплачивается дополнительно (300 рублей за каждого ребёнка)✨ '
+                                         'Если у вас больше 10 детей, предлагаем взять утренник! ' + '\n' + '\n' +
+                                         'Изменим поздравление на утренник?', reply_markup=children_30min_kb_with_morning)
     elif (callback.data == '8morechildcount') and (contact.order == 'children_30_mins'):
-        await callback.message.edit_text('8й и каждый последующий ребёнок оплачивается дополнительно '
-                                      '300 рублей за ребёнка' + '\n'
-                                      + 'Если у вас больше 10 детей, предлагаем взять утренник'
-                                      + '\n' + '\n' +
-                                      'Не хотите выбрать утренник?', reply_markup=children_morning_kb)
+        await callback.message.edit_text('Оповещаем вас, что 8-й и каждый последующий ребёнок оплачивается дополнительно' +
+                                         ' (300 рублей за каждого ребёнка)✨ ' +
+                                         'Если у вас больше 10 детей, предлагаем взять утренник! ' +
+                                         'Изменим поздравление на утренник?', reply_markup=children_morning_kb)
     else:
-        await callback.message.answer('Напишите возраст детей')
+        await callback.message.answer('Напишите, пожалуйста, возраст детей')
         await ChildrenContact.age.set()
 
 
@@ -350,15 +352,15 @@ async def children_30_minutes(callback: types.CallbackQuery):
     if callback.data == '30minsyes':
         await callback.message.edit_text('Хорошо, поменял ваш заказ на 30-минутное поздравление')
         contact.order = 'children_30_mins, но сначала хотел children_15_mins'
-        await callback.message.answer('Напишите возраст детей')
+        await callback.message.answer('Напишите, пожалуйста, возраст детей')
         await ChildrenContact.age.set()
     elif callback.data == 'morning_celebration':
         await callback.message.edit_text('Хорошо, поменял ваш заказ на утренник')
         contact.order = 'utrennik, но хотел children_15_mins'
-        await callback.message.answer('Напишите возраст детей')
+        await callback.message.answer('Напишите, пожалуйста, возраст детей')
         await ChildrenContact.age.set()
     else:
-        await callback.message.edit_text('Хорошо. Тогда напишите возраст детей')
+        await callback.message.edit_text('Хорошо. Тогда напишите, пожалуйста, возраст детей')
         await ChildrenContact.age.set()
 
 

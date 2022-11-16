@@ -1,13 +1,13 @@
-# -*- coding: cp1251 -*-
+# -*- coding: utf-8 -*-
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-# Блок общих кнопок
-button_children = InlineKeyboardButton('Детей', callback_data="/Детей")
-button_adults = InlineKeyboardButton('Взрослых', callback_data="/Взрослых")
-button_company = InlineKeyboardButton('Юр. лицо (Взрослых и Детей)', callback_data="/Компанию")
-button_get_gift = InlineKeyboardButton('Получить подарок', callback_data="/Подарок")
+# Р‘Р»РѕРє РѕР±С‰РёС… РєРЅРѕРїРѕРє
+button_children = InlineKeyboardButton('Р”РµС‚РµР№', callback_data="/Р”РµС‚РµР№")
+button_adults = InlineKeyboardButton('Р’Р·СЂРѕСЃР»С‹С…', callback_data="/Р’Р·СЂРѕСЃР»С‹С…")
+button_company = InlineKeyboardButton('Р®СЂ. Р»РёС†Рѕ (Р’Р·СЂРѕСЃР»С‹С… Рё Р”РµС‚РµР№)', callback_data="/РљРѕРјРїР°РЅРёСЋ")
+button_get_gift = InlineKeyboardButton('РџРѕР»СѓС‡РёС‚СЊ РїРѕРґР°СЂРѕРє вќ„', callback_data="/РџРѕРґР°СЂРѕРє")
 kb_menu = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_menu.add(button_children).add(button_adults).add(button_company)
 kb_menu_with_gift = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
@@ -22,60 +22,55 @@ kb_main_menu = ReplyKeyboardMarkup(resize_keyboard=True)
 kb_main_menu.add(main_menu)
 
 
-name_button_yes = InlineKeyboardButton('Да', callback_data="Nameapproved")
-name_button_no = InlineKeyboardButton('Нет', callback_data="Namedisapproved")
+name_button_yes = InlineKeyboardButton('Р”Р°', callback_data="Nameapproved")
+name_button_no = InlineKeyboardButton('РќРµС‚', callback_data="Namedisapproved")
 yes_no_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 yes_no_kb.add(name_button_yes, name_button_no)
 
-contact_button = KeyboardButton('Поделиться контактом', request_contact = True)
+contact_button = KeyboardButton('РџРѕРґРµР»РёС‚СЊСЃСЏ РєРѕРЅС‚Р°РєС‚РѕРј', request_contact = True)
 contact_kb = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 contact_kb.add(contact_button)
 
-no_contact_button = InlineKeyboardButton('Не хочу делиться', callback_data='no_contact')
+no_contact_button = InlineKeyboardButton('РќРµ С…РѕС‡Сѓ РґРµР»РёС‚СЊСЃСЏ', callback_data='no_contact')
 no_contact_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 no_contact_kb.add(no_contact_button)
 
-instagram_button = InlineKeyboardButton(text='Инстаграм',
-                                        url='https://instagram.com/ded_moroz.tomsk?igshid=YmMyMTA2M2Y=',
+instagram_button = InlineKeyboardButton(text='РРЅСЃС‚Р°РіСЂР°Рј',
+                                        url='https://instagram.com/ded_moroz.tomsk',
                                         callback_data='inst')
-telegram_button = InlineKeyboardButton(text='Телеграм-канал',
+telegram_button = InlineKeyboardButton(text='РўРµР»РµРіСЂР°Рј-РєР°РЅР°Р»',
                                        url='https://t.me/tomskpolit',
                                        callback_data='telegram')
-site_button = InlineKeyboardButton(text='Сайт',
-                                   url='https://youtube.com',
+site_button = InlineKeyboardButton(text='РЎР°Р№С‚',
+                                   url='https://РґРµРґРјРѕСЂРѕР·-С‚РѕРјСЃРє.СЂС„',
                                    callback_data='site')
 wa_button = InlineKeyboardButton(text="WhatsApp",
                                    url='https://wa.me/+79618881162',
                                    callback_data='whatsapp')
 social_networks_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-social_networks_kb.add(instagram_button, site_button).add(telegram_button, wa_button)
+social_networks_kb.add(instagram_button, site_button).add(wa_button)
 
 
-# Блок кнопок взрослых заказов
-chose_button_adult = InlineKeyboardButton('Выбрать "На корпоратив"', callback_data="AdultChose1")
-adult_chose_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-adult_chose_kb.add(chose_button_adult)
 
-
-# Блок кнопок детских заказов
-button_child_back = InlineKeyboardButton('Назад', callback_data="menu_back")
-button_child_next = InlineKeyboardButton('Далее', callback_data="menu_next")
-button_child1 = InlineKeyboardButton('Выбрать', callback_data="children_15_mins")
+# Р‘Р»РѕРє РєРЅРѕРїРѕРє РґРµС‚СЃРєРёС… Р·Р°РєР°Р·РѕРІ
+button_child_back = InlineKeyboardButton('РќР°Р·Р°Рґ', callback_data="menu_back")
+button_child_next = InlineKeyboardButton('Р”Р°Р»РµРµ', callback_data="menu_next")
+button_child1 = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ', callback_data="children_15_mins")
 kb_child_captions1 = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_child_captions1.add(button_child1)
-button_child2 = InlineKeyboardButton('Выбрать', callback_data="children_30_mins")
+button_child2 = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ', callback_data="children_30_mins")
 kb_child_captions2 = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_child_captions2.add(button_child2)
-button_child3 = InlineKeyboardButton('Выбрать', callback_data="ded_moroz_mail")
+button_child3 = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ', callback_data="ded_moroz_mail")
 kb_child_captions3 = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_child_captions3.add(button_child3)
-button_child4 = InlineKeyboardButton('Выбрать', callback_data="forest_meeting")
+button_child4 = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ', callback_data="forest_meeting")
 kb_child_captions4 = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_child_captions4.add(button_child4)
-button_child5 = InlineKeyboardButton('Выбрать', callback_data="online_gift")
+button_child5 = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ', callback_data="online_gift")
 kb_child_captions5 = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_child_captions5.add(button_child5)
-button_child6 = InlineKeyboardButton('Выбрать', callback_data="utrennik")
+button_child6 = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ', callback_data="utrennik")
 kb_child_captions6 = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 kb_child_captions6.add(button_child6)
 kb_child_caption1_menu = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
@@ -106,31 +101,38 @@ kb_child_caption6_menu.add(button_child_back, button_child6)
 
 button_children_count = InlineKeyboardButton('1-3', callback_data="1_3childcount")
 button_children_count2 = InlineKeyboardButton('4-7', callback_data="4_7childcount")
-button_children_count5 = InlineKeyboardButton('8 и более', callback_data="8morechildcount")
+button_children_count5 = InlineKeyboardButton('8 Рё Р±РѕР»РµРµ', callback_data="8morechildcount")
 children_count_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 children_count_kb.add(button_children_count, button_children_count2, button_children_count5)
 
-button_children_30mins_yes = InlineKeyboardButton('Выбрать 30', callback_data="30minsyes")
-button_children_30mins_no = InlineKeyboardButton('Нет, оставить 15', callback_data="30minsno")
-button_children_30mins = InlineKeyboardButton('Выбрать 30 минут', callback_data="30minsyes")
-button_children_morning = InlineKeyboardButton('Выбрать Утренник', callback_data="morning_celebration")
+button_children_30mins_yes = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ 30', callback_data="30minsyes")
+button_children_30mins_no = InlineKeyboardButton('РќРµС‚, РѕСЃС‚Р°РІРёС‚СЊ 15', callback_data="30minsno")
+button_children_30mins = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ 30 РјРёРЅСѓС‚', callback_data="30minsyes")
+button_children_morning = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ РЈС‚СЂРµРЅРЅРёРє', callback_data="morning_celebration")
 children_30min_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 children_30min_kb.add(button_children_30mins_yes, button_children_30mins_no)
 children_30min_kb_with_morning = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 # children_30min_kb_with_morning.add(button_children_30mins_no).add(button_children_morning).add(button_children_30mins)
 children_30min_kb_with_morning.add(button_children_morning, button_children_30mins).add(button_children_30mins_no)
 
-button_children_morning_yes = InlineKeyboardButton('Хочу', callback_data="morningyes")
-button_children_morning_no = InlineKeyboardButton('Не хочу', callback_data="morningno")
+button_children_morning_yes = InlineKeyboardButton('РҐРѕС‡Сѓ', callback_data="morningyes")
+button_children_morning_no = InlineKeyboardButton('РќРµ С…РѕС‡Сѓ', callback_data="morningno")
 children_morning_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 children_morning_kb.add(button_children_30mins_yes, button_children_30mins_no).add(button_children_morning)
 
-button_children_product1 = InlineKeyboardButton('15-минутное', callback_data="product1")
-button_children_product2 = InlineKeyboardButton('30-минутное', callback_data="product2")
-button_children_product3 = InlineKeyboardButton('Дед Мороз - почтальон', callback_data="product3")
-button_children_product4 = InlineKeyboardButton('Лесная встреча', callback_data="product4")
-button_children_product5 = InlineKeyboardButton('Онлайн-поздравление', callback_data="product5")
-button_children_product6 = InlineKeyboardButton('Утренник', callback_data="product6")
+button_children_product1 = InlineKeyboardButton('15-РјРёРЅСѓС‚РЅРѕРµ', callback_data="product1")
+button_children_product2 = InlineKeyboardButton('30-РјРёРЅСѓС‚РЅРѕРµ', callback_data="product2")
+button_children_product3 = InlineKeyboardButton('Р”РµРґ РњРѕСЂРѕР· - РїРѕС‡С‚Р°Р»СЊРѕРЅ', callback_data="product3")
+button_children_product4 = InlineKeyboardButton('Р›РµСЃРЅР°СЏ РІСЃС‚СЂРµС‡Р°', callback_data="product4")
+button_children_product5 = InlineKeyboardButton('РћРЅР»Р°Р№РЅ-РїРѕР·РґСЂР°РІР»РµРЅРёРµ', callback_data="product5")
+button_children_product6 = InlineKeyboardButton('РЈС‚СЂРµРЅРЅРёРє', callback_data="product6")
+button_back = InlineKeyboardButton('в¬… РќР°Р·Р°Рґ', callback_data="menu")
 children_product_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 children_product_kb.add(button_children_product1).add(button_children_product2).add(button_children_product3)\
-    .add(button_children_product4).add(button_children_product5).add(button_children_product6)
+    .add(button_children_product4).add(button_children_product5).add(button_children_product6).add(button_back)
+
+
+# Р‘Р»РѕРє РєРЅРѕРїРѕРє РІР·СЂРѕСЃР»С‹С… Р·Р°РєР°Р·РѕРІ
+chose_button_adult = InlineKeyboardButton('Р’С‹Р±СЂР°С‚СЊ "РќР° РєРѕСЂРїРѕСЂР°С‚РёРІ"', callback_data="AdultChose1")
+adult_chose_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
+adult_chose_kb.add(chose_button_adult).add(button_back)
