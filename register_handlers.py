@@ -5,6 +5,7 @@ from aiogram import types
 def register_handlers(dp: Dispatcher):
     dp.register_message_handler(command_start, commands=['start'])
     dp.register_message_handler(main_menu, commands=['menu'])
+    dp.register_callback_query_handler(cb_menu, text='menu')
 
     # Рассылка
     dp.register_message_handler(command_mailing, commands=['mailing'])
@@ -33,10 +34,12 @@ def register_handlers(dp: Dispatcher):
 
    # Блок регистрации детских хэндлеров
     dp.register_callback_query_handler(children_order, text='/Детей')
-    dp.register_callback_query_handler(children_order_print_menu_element, text=['menu_back', 'menu_next'])
-
-    dp.register_callback_query_handler(children_order_choise, text=['1caption', '2caption', '3caption',
-                                                                    '4caption', '5caption'])
+    # dp.register_callback_query_handler(children_order_print_menu_element, text=['menu_back', 'menu_next'])
+    dp.register_callback_query_handler(children_order_print_menu, text=['product1', 'product2', 'product3',
+                                                                    'product4', 'product5', 'product6'])
+    dp.register_callback_query_handler(children_order_menu, text=['menu_back'])
+    dp.register_callback_query_handler(children_order_choise, text=['children_15_mins', 'children_30_mins', 'ded_moroz_mail',
+                                                                    'forest_meeting', 'online_gift', 'utrennik'])
     dp.register_callback_query_handler(children_count, text=['1_3childcount', '4_7childcount', '35childcount',
                                                              '58childcount', '8morechildcount'])
     dp.register_callback_query_handler(children_30_minutes, text=['30minsyes', '30minsno', 'morning_celebration'])
