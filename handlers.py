@@ -173,16 +173,19 @@ async def approved_name(callback: types.CallbackQuery):
     global contact
     contact.name = callback.from_user.full_name
     contact.username = callback.from_user.username
-    await callback.message.answer('Нажмите кнопку "Поделиться контактом"', reply_markup=contact_kb)
-    await callback.message.answer('Либо нажмите "не хочу делиться"', reply_markup=no_contact_kb)
+    await callback.message.answer('Чтобы мы могли с вами связаться, нажмите, пожалуйста, кнопку "Поделиться контактом" ниже',reply_markup=contact_kb)
+    # await callback.message.answer('Либо нажмите "не хочу делиться"', reply_markup=no_contact_kb)
 
 
-async def no_contact(callback: types.CallbackQuery):
-    await callback.message.delete_reply_markup()
-    await bot.send_message(callback.message.chat.id,
-                           'Если хотите связаться самостоятельно, контакты Снегурочки:' +
-                           ' +79618881162', reply_markup=social_networks_kb)
-    await callback.message.answer('Чтобы вернуться в меню, нажмите на кнопку /Menu', reply_markup=kb_main_menu)
+async def no_contact(message: types.Message):
+    if message.text == 'Не делиться контактом':
+        # await message.delete_reply_markup()
+        await bot.send_message(message.chat.id,
+                               'Если хотите связаться самостоятельно, контакты Снегурочки:' +
+                               ' +79618881162', reply_markup=social_networks_kb)
+        await message.answer('Чтобы вернуться в меню, нажмите на кнопку /Menu', reply_markup=kb_main_menu)
+    else:
+        print('you suck')
 
 
 async def disapproved_name(callback: types.CallbackQuery):
@@ -194,8 +197,9 @@ async def load_name(message: types.Message, state: FSMContext):
     global contact
     contact.name = message.text
     await state.finish()
-    await message.answer('Нажмите кнопку "Поделиться контактом" в клавиатуре', reply_markup=contact_kb)
-    await message.answer('Либо нажмите "не хочу делиться", но тогда мы не сможем с вами связаться', reply_markup=no_contact_kb)
+    await message.answer('Чтобы мы могли с вами связаться, нажмите, пожалуйста, кнопку "Поделиться контактом" ниже',
+                         reply_markup=contact_kb)
+    # await message.answer('Либо нажмите "не хочу делиться", но тогда мы не сможем с вами связаться', reply_markup=no_contact_kb)
 
 
 async def command_mailing(message: types.Message):
@@ -233,7 +237,7 @@ async def company_order(callback: types.CallbackQuery):
     # await callback.message.edit_text()
     await bot.send_document(callback.message.chat.id, document=kp_telegram_id)
     await callback.message.answer('Если вас заинтересовало какое-то поздравление и вы хотите узнать о нем подробнее'
-                                  ', оставьте, пожалуйста, ваши контакты и мы с вами обязательно свяжемся! ', reply_markup=contact_kb)
+                                  ', оставьте, пожалуйста, ваши контакты и мы с вами обязательно свяжемся! ')
     await callback.message.answer(f'Ваше настоящее имя: {callback.from_user.full_name}?', reply_markup=yes_no_kb)
 
 

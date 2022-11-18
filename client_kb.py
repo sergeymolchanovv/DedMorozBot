@@ -28,8 +28,9 @@ yes_no_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 yes_no_kb.add(name_button_yes, name_button_no)
 
 contact_button = KeyboardButton('Поделиться контактом', request_contact = True)
+contact_button1 = KeyboardButton('Не делиться контактом')
 contact_kb = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-contact_kb.add(contact_button)
+contact_kb.add(contact_button).add(contact_button1)
 
 no_contact_button = InlineKeyboardButton('Не хочу делиться', callback_data='no_contact')
 no_contact_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
