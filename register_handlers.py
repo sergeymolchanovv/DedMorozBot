@@ -20,7 +20,8 @@ def register_handlers(dp: Dispatcher):
     dp.register_message_handler(get_contact, content_types=types.ContentType.CONTACT)
     dp.register_callback_query_handler(approved_name, text='Nameapproved')
     dp.register_callback_query_handler(disapproved_name, text='Namedisapproved')
-    dp.register_callback_query_handler(no_contact, text='no_contact')
+    # dp.register_callback_query_handler(no_contact, text='no_contact')
+    dp.register_message_handler(no_contact, lambda message: 'Не делиться контактом' in message.text)
     dp.register_message_handler(get_file_id, content_types=types.ContentType.DOCUMENT)
     dp.register_message_handler(get_photo_id, content_types=types.ContentType.PHOTO)
 
