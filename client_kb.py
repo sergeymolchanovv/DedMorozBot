@@ -39,8 +39,8 @@ no_contact_kb.add(no_contact_button)
 instagram_button = InlineKeyboardButton(text='Инстаграм',
                                         url='https://instagram.com/ded_moroz.tomsk',
                                         callback_data='inst')
-telegram_button = InlineKeyboardButton(text='Телеграм-канал',
-                                       url='https://t.me/tomskpolit',
+telegram_button = InlineKeyboardButton(text='Телеграм',
+                                       url='https://t.me/ded_moroz_tomsk',
                                        callback_data='telegram')
 site_button = InlineKeyboardButton(text='Сайт',
                                    url='https://дедмороз-томск.рф',
@@ -49,7 +49,7 @@ wa_button = InlineKeyboardButton(text="WhatsApp",
                                    url='https://wa.me/+79618881162',
                                    callback_data='whatsapp')
 social_networks_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-social_networks_kb.add(instagram_button, site_button).add(wa_button)
+social_networks_kb.add(instagram_button, site_button).add(wa_button, telegram_button)
 
 
 
