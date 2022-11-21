@@ -11,7 +11,7 @@ from database import *
 
 serg_id = 357864166
 orders_chat_id = -824293895
-kp_telegram_id = "BQACAgIAAxkBAAICTmN00NTMa9kFcmPkb5F-OMrHnrNwAAJXHgACZNegS7Szlx5ZytAiKwQ"
+kp_telegram_id = "BQACAgIAAxkBAAIHP2N7KLLFLj8LsyACA6_QGSfcZCkRAAJ6HwACOlrYS2Cg5z95I2F5KwQ"
 photo_telegram_id1 = "AgACAgIAAxkBAAMmY24zBdqRkgek32bxTsgB_p7p4OcAAmnCMRv38HBL8RNHv94zprABAAMCAAN5AAMrBA"
 photo_telegram_id2 = "AgACAgIAAxkBAAMlY24y-fmiaey5EWtrlG9ZA_VXwmkAAmrCMRv38HBLqkVYgQ1qmxcBAAMCAAN5AAMrBA"
 photo_telegram_id3 = "AgACAgIAAxkBAAMoY24zL4GC4m9MvvaflHOzobqP1kQAAuG_MRva6XBLK1CVJO5X6wUBAAMCAAN5AAMrBA"
