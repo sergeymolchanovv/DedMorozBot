@@ -52,7 +52,6 @@ social_networks_kb = InlineKeyboardMarkup(resize_keyboard=True, one_time_keyboar
 social_networks_kb.add(instagram_button, site_button).add(wa_button, telegram_button)
 
 
-
 # Блок кнопок детских заказов
 button_child_back = InlineKeyboardButton('Назад', callback_data="menu_back")
 button_child_next = InlineKeyboardButton('Далее', callback_data="menu_next")
